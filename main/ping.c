@@ -14,9 +14,6 @@ esp_ping_handle_t ping_session_handle;
 
 static void ping_success_callback(esp_ping_handle_t hdl, void *args)
 {
-    // optionally, get callback arguments
-    // const char* str = (const char*) args;
-    // printf("%s\r\n", str); // "foo"
     uint8_t ttl;
     uint16_t seqno;
     uint32_t elapsed_time, recv_len;
@@ -26,8 +23,8 @@ static void ping_success_callback(esp_ping_handle_t hdl, void *args)
     esp_ping_get_profile(hdl, ESP_PING_PROF_IPADDR, &target_addr, sizeof(target_addr));
     esp_ping_get_profile(hdl, ESP_PING_PROF_SIZE, &recv_len, sizeof(recv_len));
     esp_ping_get_profile(hdl, ESP_PING_PROF_TIMEGAP, &elapsed_time, sizeof(elapsed_time));
-    ESP_LOGI(TAG, "%d bytes from %s icmp_seq=%d ttl=%d time=%d ms",
-             recv_len, inet_ntoa(target_addr.u_addr.ip4), seqno, ttl, elapsed_time);
+    // ESP_LOGI(TAG, "%d bytes from %s icmp_seq=%d ttl=%d time=%d ms",
+    //          recv_len, inet_ntoa(target_addr.u_addr.ip4), seqno, ttl, elapsed_time);
 }
 
 static void ping_timeout_callback(esp_ping_handle_t hdl, void *args)
@@ -60,7 +57,7 @@ void ping_init(void)
     esp_ping_config_t ping_config = ESP_PING_DEFAULT_CONFIG();
     ping_config.target_addr = target_addr;       // target IP address
     ping_config.count = ESP_PING_COUNT_INFINITE; // ping in infinite mode, esp_ping_stop can stop it
-    ping_config.interval_ms = 1000;
+    ping_config.interval_ms = 50;
     ping_config.data_size = 1024;
     ping_config.timeout_ms = ping_config.interval_ms / 2;
 

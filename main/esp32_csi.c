@@ -21,9 +21,8 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     wifi_init_sta();
-    // ping_init();
-    // ping_start();
-    csi_start();
+    ping_init();
+    ping_start();
     csi_init();
-    
+    csi_start();
 }
